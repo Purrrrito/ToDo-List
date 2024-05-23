@@ -6,8 +6,14 @@ function addTask() {
     let taskTextBox = document.querySelector('#task-input');
     let taskText = taskTextBox.value;
     let taskDiv = document.createElement("div");
-    let taskList = document.createElement("p");
-    taskList.textContent = taskText;
-    taskDiv.appendChild(taskList);
+    let taskCheckbox = document.createElement("input");
+    taskCheckbox.type = "checkbox";
+    taskCheckbox.id = taskText;
+    let taskLabel = document.createElement("label");
+    taskLabel.htmlFor = taskText;
+    taskLabel.textContent = taskText;
+    taskDiv.appendChild(taskCheckbox);
+    taskDiv.appendChild(taskLabel);
     document.querySelector("#task-display").appendChild(taskDiv);
+    taskTextBox.value = "";
 }
