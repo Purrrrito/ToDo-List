@@ -2,8 +2,8 @@ window.onload = function() {
     let addTaskBtn = document.querySelector("#add-task") as HTMLButtonElement
     addTaskBtn.onclick = addTask;
 
-    
 }
+
 
 function addTask() {
     let taskTextBox = document.querySelector('#task-input') as HTMLInputElement;
@@ -19,6 +19,14 @@ function addTask() {
     let taskLabel:HTMLLabelElement = document.createElement("label");
     taskLabel.htmlFor = taskText;
     taskLabel.textContent = taskText;
+
+    taskCheckbox.addEventListener('change', function() {
+        if (this.checked) {
+            taskLabel.style.textDecoration = 'line-through';
+        } else {
+            taskLabel.style.textDecoration = 'none';
+        }
+    });
 
     taskDiv.appendChild(taskCheckbox);
     taskDiv.appendChild(taskLabel);

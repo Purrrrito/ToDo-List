@@ -12,6 +12,14 @@ function addTask() {
     let taskLabel = document.createElement("label");
     taskLabel.htmlFor = taskText;
     taskLabel.textContent = taskText;
+    taskCheckbox.addEventListener('change', function () {
+        if (this.checked) {
+            taskLabel.style.textDecoration = 'line-through';
+        }
+        else {
+            taskLabel.style.textDecoration = 'none';
+        }
+    });
     taskDiv.appendChild(taskCheckbox);
     taskDiv.appendChild(taskLabel);
     document.querySelector("#task-display").appendChild(taskDiv);
