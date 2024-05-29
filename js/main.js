@@ -1,10 +1,19 @@
 window.onload = function () {
     let addTaskBtn = document.querySelector("#add-task");
-    addTaskBtn.onclick = addTask;
+    addTaskBtn.onclick = createTask;
 };
-function addTask() {
+function createTask() {
     let taskTextBox = document.querySelector('#task-input');
     let taskText = taskTextBox.value;
+    addTaskToWebpage(taskText);
+    taskTextBox.value = "";
+}
+function addTaskToWebpage(taskText) {
+    let taskElement = createTaskElement(taskText);
+    let tasksContainer = document.querySelector('#task-display');
+    tasksContainer.appendChild(taskElement);
+}
+function createTaskElement(taskText) {
     let taskDiv = document.createElement("div");
     let taskCheckbox = document.createElement("input");
     taskCheckbox.type = "checkbox";
@@ -13,15 +22,9 @@ function addTask() {
     taskLabel.htmlFor = taskText;
     taskLabel.textContent = taskText;
     taskCheckbox.addEventListener('change', function () {
-        if (this.checked) {
-            taskLabel.style.textDecoration = 'line-through';
-        }
-        else {
-            taskLabel.style.textDecoration = 'none';
-        }
+        taskLabel.style.textDecoration = this.checked ? 'line-through' : 'none';
     });
     taskDiv.appendChild(taskCheckbox);
     taskDiv.appendChild(taskLabel);
-    document.querySelector("#task-display").appendChild(taskDiv);
-    taskTextBox.value = "";
+    return taskDiv;
 }

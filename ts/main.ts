@@ -1,37 +1,62 @@
 window.onload = function() {
     let addTaskBtn = document.querySelector("#add-task") as HTMLButtonElement
-    addTaskBtn.onclick = addTask;
+    addTaskBtn.onclick = createTask;
 
 }
 
 
-function addTask() {
+function createTask() {
+    // Get the task input element and its value
     let taskTextBox = document.querySelector('#task-input') as HTMLInputElement;
-    let taskText:string = taskTextBox.value;
+    let taskText: string = taskTextBox.value;
 
-    let taskDiv:HTMLDivElement = document.createElement("div");
+    addTaskToWebpage(taskText);
 
+    // Clears text box after the task is created and added to the webpage
+    taskTextBox.value = "";
+}
 
-    let taskCheckbox:HTMLInputElement = document.createElement("input");
+/**
+ * Adds the task to the webpage by creating a new task element and appending it to the container
+ * @param taskText The text in the text box after when the btn is clicked
+ */
+function addTaskToWebpage(taskText:string) {
+    let taskElement: HTMLDivElement = createTaskElement(taskText)
+
+    let tasksContainer = document.querySelector('#task-display') as HTMLDivElement;
+
+    tasksContainer.appendChild(taskElement);
+}
+
+/**
+ * Creates a new task element with a checkbox and label
+ * @param taskText taskText The text for the task's label
+ * @returns The newly created task div element
+ */
+function createTaskElement(taskText:string){
+    // Create a div element to hold the checkbox and label
+    let taskDiv: HTMLDivElement = document.createElement("div");
+
+    // Create a checkbox input element and set its type and id
+    let taskCheckbox: HTMLInputElement = document.createElement("input");
     taskCheckbox.type = "checkbox";
     taskCheckbox.id = taskText;
 
-    let taskLabel:HTMLLabelElement = document.createElement("label");
+    // Create a label for the checkbox, setting its "for" attribute and text content
+    let taskLabel: HTMLLabelElement = document.createElement("label");
     taskLabel.htmlFor = taskText;
     taskLabel.textContent = taskText;
 
-    taskCheckbox.addEventListener('change', function() {
-        if (this.checked) {
-            taskLabel.style.textDecoration = 'line-through';
-        } else {
-            taskLabel.style.textDecoration = 'none';
-        }
+    // Create a label for the checkbox, setting its "for" attribute and text content
+    taskCheckbox.addEventListener('change', function () {
+        // Apply line-through style if the checkbox is checked, otherwise remove it
+        taskLabel.style.textDecoration = this.checked ? 'line-through' : 'none';
     });
 
+    // Append the checkbox and label to the task div
     taskDiv.appendChild(taskCheckbox);
     taskDiv.appendChild(taskLabel);
 
-    document.querySelector("#task-display").appendChild(taskDiv);
-
-    taskTextBox.value = "";
+    // Return the complete task div
+    return taskDiv;
 }
