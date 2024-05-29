@@ -2,8 +2,23 @@ window.onload = function() {
     let addTaskBtn = document.querySelector("#add-task") as HTMLButtonElement
     addTaskBtn.onclick = createTask;
 
+    displayStoredTasks();
 }
 
+function displayStoredTasks() {
+    const TaskStorageKey = "Tasks";
+
+    // Gets tasks with the StorageKey
+    let storedTasks = localStorage.getItem(TaskStorageKey);
+
+    // Checks if storedTasks is NOT null parses the JSON string to an array, otherwise initializes tasks as an empty array
+    let tasks = storedTasks ? JSON.parse(storedTasks) : [];
+
+    // Displays the tasks through a forEach loop
+    tasks.forEach(taskText => {
+        addTaskToWebpage(taskText);
+    });
+}
 
 function createTask() {
     // Get the task input element and its value
@@ -68,7 +83,7 @@ function addTaskToStorage(taskText:string) {
     // Reads existing tasks out of storage
     let taskData = localStorage.getItem(TaskStorageKey);
 
-    // Initializes with existing data, or with an empty array if there is no data
+    // Assigns tasks as an array of stored tasks if they exist, or defaults to an empty array if none are found
     let tasks:string[] = taskData ? JSON.parse(taskData) : [];
 
     tasks.push(taskText);

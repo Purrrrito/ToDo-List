@@ -1,7 +1,16 @@
 window.onload = function () {
     let addTaskBtn = document.querySelector("#add-task");
     addTaskBtn.onclick = createTask;
+    displayStoredTasks();
 };
+function displayStoredTasks() {
+    const TaskStorageKey = "Tasks";
+    let storedTasks = localStorage.getItem(TaskStorageKey);
+    let tasks = storedTasks ? JSON.parse(storedTasks) : [];
+    tasks.forEach(taskText => {
+        addTaskToWebpage(taskText);
+    });
+}
 function createTask() {
     let taskTextBox = document.querySelector('#task-input');
     let taskText = taskTextBox.value;
