@@ -6,6 +6,7 @@ function createTask() {
     let taskTextBox = document.querySelector('#task-input');
     let taskText = taskTextBox.value;
     addTaskToWebpage(taskText);
+    addTaskToStorage(taskText);
     taskTextBox.value = "";
 }
 function addTaskToWebpage(taskText) {
@@ -27,4 +28,12 @@ function createTaskElement(taskText) {
     taskDiv.appendChild(taskCheckbox);
     taskDiv.appendChild(taskLabel);
     return taskDiv;
+}
+function addTaskToStorage(taskText) {
+    const TaskStorageKey = "Tasks";
+    let taskData = localStorage.getItem(TaskStorageKey);
+    let tasks = taskData ? JSON.parse(taskData) : [];
+    tasks.push(taskText);
+    taskData = JSON.stringify(tasks);
+    localStorage.setItem(TaskStorageKey, taskData);
 }

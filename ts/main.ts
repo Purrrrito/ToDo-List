@@ -12,6 +12,8 @@ function createTask() {
 
     addTaskToWebpage(taskText);
 
+    addTaskToStorage(taskText);
+
     // Clears text box after the task is created and added to the webpage
     taskTextBox.value = "";
 }
@@ -59,4 +61,19 @@ function createTaskElement(taskText:string){
 
     // Return the complete task div
     return taskDiv;
+}
+
+function addTaskToStorage(taskText:string) {
+    const TaskStorageKey = "Tasks";
+    // Reads existing tasks out of storage
+    let taskData = localStorage.getItem(TaskStorageKey);
+
+    // Initializes with existing data, or with an empty array if there is no data
+    let tasks:string[] = taskData ? JSON.parse(taskData) : [];
+
+    tasks.push(taskText);
+
+    // Adds to localStorage
+    taskData = JSON.stringify(tasks);
+    localStorage.setItem(TaskStorageKey, taskData);
 }
